@@ -1,3 +1,7 @@
+
+!!! THIS IS A ON GOING PROJECT I AM STILL WORKING ON IT (BETA) !!!
+
+
 Docker ssh :
 
 run ./docker_jazzy.sh on the laptop 
