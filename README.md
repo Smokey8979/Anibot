@@ -1,4 +1,4 @@
-Docker for ssh :
+Docker ssh :
 
 run ./docker_jazzy.sh on the laptop 
 
@@ -24,4 +24,7 @@ map_saver :
 
 ros2 run nav2_map_server map_saver_cli -f ~/maps/kitch --ros-args -p save_map_timeout:=10.0
 
+
+
+This is a ROS2 diff drive navigation robot using raspberry pi 5
 
