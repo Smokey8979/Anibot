@@ -1,0 +1,356 @@
+<?xml version="1.0"?>
+<robot name="three_layer_mobile_robot">
+
+  <!-- BASE FOOTPRINT (required by Nav2 / move_base) -->
+  <link name="base_footprint"/>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <!-- base_link sits 0.032 m above the ground (wheel radius = 0.041, centre of base at ~wheel height) -->
+    <origin xyz="0 0 0.041" rpy="0 0 0"/>
+  </joint>
+
+  <!-- BASE LINK  new -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0.0112" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.01" radius="0.150"/>
+      </geometry>
+      <material name="base_material">
+        <color rgba="0.75 0.78 0.82 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0112" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.0224" radius="0.150"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="5.0"/>
+      <origin xyz="0 0 0.0112" rpy="0 0 0"/>
+      <inertia ixx="0.035" ixy="0.0" ixz="0.0"
+               iyy="0.035" iyz="0.0" izz="0.065"/>
+    </inertial>
+  </link>
+
+  <!-- CENTRAL SHAFT -->
+  <link name="axle">
+    <visual>
+      <origin xyz="0 0 0.032" rpy="1.57 0 0"/>
+      <geometry>
+        <cylinder length="0.45" radius="0.008"/>
+      </geometry>
+      <material name="metal">
+        <color rgba="0.55 0.55 0.60 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.032" rpy="1.57 0 0"/>
+      <geometry>
+        <cylinder length="0.45" radius="0.008"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.40"/>
+      <inertia ixx="0.00675" ixy="0.0" ixz="0.0"
+               iyy="0.000032" iyz="0.0" izz="0.00675"/>
+    </inertial>
+  </link>
+
+  <!-- LEFT MAIN WHEEL -->
+  <link name="left_wheel">
+    <visual>
+      <origin xyz="0 0 0.032" rpy="1.57 0 0"/>
+      <geometry>
+        <cylinder length="0.045" radius="0.041"/>
+      </geometry>
+      <material name="wheel_rubber">
+        <color rgba="0.10 0.10 0.12 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.032" rpy="1.57 0 0"/>
+      <geometry>
+        <cylinder length="0.045" radius="0.041"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.85"/>
+      <inertia ixx="0.0018" ixy="0.0" ixz="0.0"
+               iyy="0.0018" iyz="0.0" izz="0.0028"/>
+    </inertial>
+  </link>
+
+  <!-- RIGHT MAIN WHEEL -->
+  <link name="right_wheel">
+    <visual>
+      <origin xyz="0 0 0.032" rpy="1.57 0 0"/>
+      <geometry>
+        <cylinder length="0.045" radius="0.041"/>
+      </geometry>
+      <material name="wheel_rubber"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.032" rpy="1.57 0 0"/>
+      <geometry>
+        <cylinder length="0.045" radius="0.041"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.85"/>
+      <inertia ixx="0.0018" ixy="0.0" ixz="0.0"
+               iyy="0.0018" iyz="0.0" izz="0.0028"/>
+    </inertial>
+  </link>
+
+  <!-- FRONT CASTER SUPPORT (rectangle standoff) -->
+  <link name="front_caster_support">
+    <visual>
+      <origin xyz="0 0 -0.02" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.024 0.024 0.01"/>
+      </geometry>
+      <material name="support_material">
+        <color rgba="0.4 0.42 0.45 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.0135" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.024 0.024 0.027"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.08"/>
+      <origin xyz="0 0 -0.0135" rpy="0 0 0"/>
+      <inertia ixx="0.00015" ixy="0.0" ixz="0.0"
+               iyy="0.00015" iyz="0.0" izz="0.00015"/>
+    </inertial>
+  </link>
+
+  <!-- BACK CASTER SUPPORT (rectangle standoff) -->
+  <link name="back_caster_support">
+    <visual>
+      <origin xyz="0 0 -0.02" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.024 0.024 0.01"/>
+      </geometry>
+      <material name="support_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.0135" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.024 0.024 0.027"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.08"/>
+      <origin xyz="0 0 -0.0135" rpy="0 0 0"/>
+      <inertia ixx="0.00015" ixy="0.0" ixz="0.0"
+               iyy="0.00015" iyz="0.0" izz="0.00015"/>
+    </inertial>
+  </link>
+
+  <!-- FRONT CASTER -->
+  <link name="front_caster">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.006"/>
+      </geometry>
+      <material name="caster_material">
+        <color rgba="0.28 0.28 0.32 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.006"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.10"/>
+      <inertia ixx="0.00005" ixy="0.0" ixz="0.0"
+               iyy="0.00005" iyz="0.0" izz="0.00005"/>
+    </inertial>
+  </link>
+
+  <!-- BACK CASTER -->
+  <link name="back_caster">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.006"/>
+      </geometry>
+      <material name="caster_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.006"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.10"/>
+      <inertia ixx="0.00005" ixy="0.0" ixz="0.0"
+               iyy="0.00005" iyz="0.0" izz="0.00005"/>
+    </inertial>
+  </link>
+
+  <!-- MIDDLE PLATE -->
+  <link name="middle_plate">
+    <visual>
+      <origin xyz="0 0 0.0025" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.005" radius="0.102"/>
+      </geometry>
+      <material name="plate_material">
+        <color rgba="0.82 0.85 0.88 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0025" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.005" radius="0.102"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.6"/>
+      <inertia ixx="0.003" ixy="0.0" ixz="0.0"
+               iyy="0.003" iyz="0.0" izz="0.006"/>
+    </inertial>
+  </link>
+
+  <!-- UPPER PLATE -->
+  <link name="upper_plate">
+    <visual>
+      <origin xyz="0 0 0.0025" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.005" radius="0.102"/>
+      </geometry>
+      <material name="plate_material"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.0025" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.005" radius="0.102"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.55"/>
+      <inertia ixx="0.0028" ixy="0.0" ixz="0.0"
+               iyy="0.0028" iyz="0.0" izz="0.0055"/>
+    </inertial>
+  </link>
+
+  <!-- LiDAR -->
+  <link name="lidar_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.055" radius="0.03"/>
+      </geometry>
+      <material name="lidar_color">
+        <color rgba="0.1 0.6 0.1 0.9"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.055" radius="0.03"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.25"/>
+      <inertia ixx="0.0006" ixy="0.0" ixz="0.0"
+               iyy="0.0006" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <!-- Joints -->
+
+  <joint name="base_to_axle" type="fixed">
+    <parent link="base_link"/>
+    <child link="axle"/>
+    <origin xyz="0 0 -0.015" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="left_wheel_joint" type="continuous">
+    <parent link="axle"/>
+    <child link="left_wheel"/>
+    <origin xyz="0 -0.210 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <joint name="right_wheel_joint" type="continuous">
+    <parent link="axle"/>
+    <child link="right_wheel"/>
+    <origin xyz="0 0.210 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- Front caster support (rectangle) -->
+  <joint name="base_to_front_support" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_caster_support"/>
+    <origin xyz="0.12 0 0.024" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Front caster attached to bottom of rectangle support -->
+  <joint name="front_support_to_caster" type="continuous">
+    <parent link="front_caster_support"/>
+    <child link="front_caster"/>
+    <origin xyz="0 0 -0.027" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <!-- Back caster support (rectangle) -->
+  <joint name="base_to_back_support" type="fixed">
+    <parent link="base_link"/>
+    <child link="back_caster_support"/>
+    <origin xyz="-0.12 0 0.024" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Back caster attached to bottom of rectangle support -->
+  <joint name="back_support_to_caster" type="continuous">
+    <parent link="back_caster_support"/>
+    <child link="back_caster"/>
+    <origin xyz="0 0 -0.027" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <joint name="base_to_middle_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="middle_plate"/>
+    <origin xyz="0 0 0.066" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="middle_to_upper_joint" type="fixed">
+    <parent link="middle_plate"/>
+    <child link="upper_plate"/>
+    <origin xyz="0 0 0.07" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="mast_to_lidar_joint" type="fixed">
+    <parent link="upper_plate"/>
+    <child link="lidar_link"/>
+    <origin xyz="0 0 0.035" rpy="0 0 0"/>
+  </joint>
+
+  <!-- LASER frame — alias so RPLIDAR driver (frame_id: laser) matches TF tree -->
+  <link name="laser"/>
+
+  <joint name="lidar_to_laser_joint" type="fixed">
+    <parent link="lidar_link"/>
+    <child link="laser"/>
+    <origin xyz="0 0 0.0275" rpy="0 0 0"/>
+  </joint>
+
+</robot>
+
+
+
+
