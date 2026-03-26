@@ -1,8 +1,47 @@
+# ROS2 build artifacts
 build/
 install/
 log/
+
+# Python
 *.pyc
+*.pyo
 __pycache__/
+*.egg-info/
+.eggs/
+dist/
+*.egg
+
+# ROS bag files (large — do not commit)
+*.bag
+*.db3
+*.mcap
+
+# Log and runtime output files
+*.txt
+*.log
+
+# IDE / editor
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Compiled object files
+*.o
+*.a
+*.so
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# Colcon
+.colcon_install_layout
